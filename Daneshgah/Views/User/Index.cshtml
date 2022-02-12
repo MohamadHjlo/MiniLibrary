@@ -1,0 +1,166 @@
+﻿@using Daneshgah.MethodHa.TabdilTarikh
+@model UserViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <div class="text-center">
+        <h2 class="mt-5 mb-5 text-title-experts">کتابخانه  </h2>
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-controller="User" asp-action="BookSearch" method="get" class="">
+                    <div class="mb-3 text-justify">جست و جو در کتاب ها</div>
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <input type="text" class="form-control col-6 ml-2" name="searchKey" value="">
+                            <input class="btn btn-cyan col-4" type="submit" name="submit" value="جست وجو" />
+                        </div>
+                        <div class="col-11 mb-1">
+                            <fieldset class="form-group">
+                                <label for="basicInput">بر اساس </label>
+                                <select class="form-control" name="groupId">
+                                    <option value="1">شماره در دسته</option>
+                                    <option value="2">عنوان</option>
+                                    <option value="3">موضوع</option>
+                                    <option value="4">شابک</option>
+                                    <option value="5">تعداد صفحات</option>
+                                    <option value="6">سال انتشار</option>
+                                    <option value="7">ناشر</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form asp-controller="User" asp-action="ArticleSearch" method="get" class="">
+                    <div class="mb-3 text-justify">جست و جو در مجله ها</div>
+                    <fieldset class="form-group">
+                        <div class="row">
+                            <input type="text" class="form-control col-6 ml-2" name="searchKey" value="">
+                            <input class="btn btn-cyan col-4" type="submit" name="submit" value="جست وجو" />
+                        </div>
+                        <div class="col-11 mb-1">
+                            <fieldset class="form-group">
+                                <label for="basicInput">بر اساس  </label>
+                                <select class="form-control" name="groupId">
+                                    <option value="1">شماره در دسته</option>
+                                    <option value="2">عنوان</option>
+                                    <option value="3">موضوع</option>
+                                    <option value="4">شابک</option>
+                                    <option value="5">تعداد صفحات</option>
+                                    <option value="6">سال انتشار</option>
+                                    <option value="7">ناشر</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </fieldset>
+
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form asp-controller="User" asp-action="JournalSearch" method="get" class="">
+                    <div class="mb-3 text-justify">جست و جو در مقاله ها</div>
+                    <fieldset class="">
+                        <div class="row">
+                            <input type="text" class="form-control col-6 ml-2" name="searchKey" value="">
+                            <input class="btn btn-cyan col-4" type="submit" name="submit" value="جست وجو" />
+                        </div>
+                    </fieldset>
+                    <div class="col-11 mb-1">
+                        <fieldset class="">
+                            <label for="basicInput">بر اساس </label>
+                            <select class="form-control" name="groupId">
+                                <option value="1">شماره در دسته</option>
+                                <option value="2">عنوان</option>
+                                <option value="3">موضوع</option>
+                                <option value="4">شابک</option>
+                                <option value="5">تعداد صفحات</option>
+                                <option value="6">سال انتشار</option>
+                                <option value="7">ناشر</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12 box-shadow pt-5 box-container mt-5 pb-3">
+
+            <table class="table table-bordered table-responsive-sm table-hover">
+                <thead class="thead-custom">
+                    <tr class="text-center">
+                        <th height="20" class="xl636160" align="left" width="20" style="height: 15.0pt; width: 15pt">
+                            شماره در دسته
+                        </th>
+                        <th>دسته</th>
+                        <th>عنوان</th>
+                        <th>موضوع</th>
+                        <th>شابک</th>
+                        <th>تعداد صفحات</th>
+                        <th>سال انتشار</th>
+                        <th>ناشر</th>
+                        <th style="width: 24%">دستورات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Books != null)
+                    {
+
+                        @foreach (var book in Model.Books)
+                        {
+                            <tr>
+                                <td>@book.Id</td>
+                                <td>کتاب</td>
+                                <td>@book.Title</td>
+                                <td>@book.Topic</td>
+                                <td>@book.ISBN</td>
+                                <td>@book.PageCount</td>
+                                <td>@book.PublicationYear.ToShamsiCalender()</td>
+                                <td>@book.Publisher</td>
+                                <td style="width: 24%">
+                                    <a asp-controller="User" asp-action="AddToDeposits" asp-route-bookId="@book.Id" class="btn btn-magenta">افزودن به امانت ها</a>
+                                </td>
+                            </tr>
+                        }}
+                    @if (Model.Articles != null)
+                    {
+                        @foreach (var article in Model.Articles)
+                        {
+                            <tr>
+                                <td>@article.Id</td>
+                                <td>مقاله</td>
+                                <td>@article.Title</td>
+                                <td>@article.Topic</td>
+                                <td>@article.ISBN</td>
+                                <td>@article.PageCount</td>
+                                <td>@article.PublicationYear.ToShamsiCalender()</td>
+                                <td>@article.Publisher</td>
+                                <td style="width: 24%">
+                                </td>
+                            </tr>
+                        }
+                    }
+                    @if (Model.Journals != null)
+                    {
+                        @foreach (var journal in Model.Journals)
+                        {
+                            <tr>
+                                <td>@journal.Id</td>
+                                <td>مجله</td>
+                                <td>@journal.Title</td>
+                                <td>@journal.Topic</td>
+                                <td>@journal.ISBN</td>
+                                <td>@journal.PageCount</td>
+                                <td>@journal.PublicationYear.ToShamsiCalender()</td>
+                                <td>@journal.Publisher</td>
+                                <td style="width: 24%">
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

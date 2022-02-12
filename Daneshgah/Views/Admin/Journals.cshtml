@@ -1,0 +1,52 @@
+﻿@using Daneshgah.MethodHa.TabdilTarikh
+@model List<Journal>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <div class="text-center">
+        <h2 class="mt-5 mb-5 text-title-experts">مجلات </h2>
+        <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12 box-shadow pt-5 box-container mt-5 pb-3">
+            <a asp-controller="Admin" asp-action="AddJournal" class="btn btn-darkaqua mb-3">افزودن مجله جدید</a>
+
+            @if(ViewData["SuccessDelete"]!=null)
+            {
+                <span class="alert alert-success float-left">@ViewData["SuccessDelete"]</span>
+            }
+            <table class="table table-bordered table-responsive-sm table-hover">
+                <thead class="thead-custom">
+                <tr class="text-center">
+                    <th height="20" class="xl636160" align="left" width="20" style="height: 15.0pt; width: 15pt">
+                        شماره
+                    </th>
+                    <th>عنوان</th>
+                    <th>موضوع</th>
+                    <th>شابک</th>
+                    <th>تعداد صفحات</th>
+                    <th>سال انتشار</th>
+                    <th>ناشر</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach(var journal in Model)
+                {
+                    <tr>
+                        <td>@journal.Id</td>
+                        <td>@journal.Title</td>
+                        <td>@journal.Topic</td>
+                        <td>@journal.ISBN</td>
+                        <td>@journal.PageCount</td>
+                        <td>@journal.PublicationYear.ToShamsiCalender()</td>
+                        <td>@journal.Publisher</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="DeleteJournal" asp-route-journalId="@journal.Id" class="btn btn--danger">حذف</a>
+                            <a asp-controller="Admin" asp-action="EditJournal" asp-route-journalId="@journal.Id" class="btn btn-info">تغییر </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

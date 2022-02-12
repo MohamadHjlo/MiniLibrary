@@ -1,0 +1,53 @@
+﻿@using Daneshgah.MethodHa.TabdilTarikh
+@model List<Book>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <div class="text-center">
+        <h2 class="mt-5 mb-5 text-title-experts">کتاب ها </h2>
+        <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12 box-shadow pt-5 box-container mt-5 pb-3">
+            <a asp-controller="Admin" asp-action="AddBook" class="btn btn-darkaqua mb-3">افزودن کتاب جدید</a>
+
+            @if (ViewData["SuccessDelete"] != null)
+            {
+                <span class="alert alert-success float-left">@ViewData["SuccessDelete"]</span>
+            }
+            <table class="table table-bordered table-responsive-sm table-hover">
+                <thead class="thead-custom">
+                    <tr class="text-center">
+                        <th height="20" class="xl636160" align="left" width="20" style="height: 15.0pt; width: 15pt">
+                            شماره
+                        </th>
+                        <th>عنوان</th>
+                        <th>موضوع</th>
+                        <th>شابک</th>
+                        <th>تعداد صفحات</th>
+                        <th>سال انتشار</th>
+                        <th>ناشر</th>
+                        <th style="width: 24%">دستورات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model)
+                    {
+                        <tr>
+                            <td>@book.Id</td>
+                            <td>@book.Title</td>
+                            <td>@book.Topic</td>
+                            <td>@book.ISBN</td>
+                            <td>@book.PageCount</td>
+                            <td>@book.PublicationYear.ToShamsiCalender()</td>
+                            <td>@book.Publisher</td>
+                            <td style="width: 24%">
+                                <a asp-controller="Admin" asp-action="DeleteBook" asp-route-bookId="@book.Id" class="btn btn--danger">حذف</a>
+                                <a asp-controller="Admin" asp-action="EditBook" asp-route-bookId="@book.Id" class="btn btn-info">تغییر </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+﻿@model AddEditItemsViewModel
+@{
+    ViewBag.Title = "فرم ثبت نام کاربر جدید";
+}
+
+
+<section class="basic-elements">
+    <div class="row">
+        <div class="col-sm-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title mb-0">اطلاعات کتاب جدید را وارد نمایید</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="px-3">
+                        <form asp-controller="Admin" asp-action="AddBook" method="post">
+                            <span class="text-danger">@ViewData["ErrorMessage"]</span>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Title"></label>
+                                            <input asp-for="Title" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Title"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Topic"></label>
+                                            <input asp-for="Topic" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Topic"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="PageCount"></label>
+                                            <input asp-for="PageCount" class="form-control" type="number" />
+                                            <span class="text-danger" asp-validation-for="PageCount"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="ISBN"></label>
+                                            <input asp-for="ISBN" class="form-control" type="number" />
+                                            <span class="text-danger" asp-validation-for="ISBN"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Publisher"></label>
+                                            <input asp-for="Publisher" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Publisher"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="form-row text-center align-items-center">
+                                        <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                            <fieldset class="form-group">
+                                                <label asp-for="PublicationDate"></label>
+                                                <input id="date" onchange="CheckDate(this.value)" onchange="CheckDate(this.value)" asp-for="PublicationDate" class="form-control" type="number" />
+                                                <span class="text-danger" asp-validation-for="PublicationDate"></span>
+                                            </fieldset>
+                                        </div>
+                                        /
+                                        <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                            <fieldset class="form-group">
+                                                <label asp-for="PublicationMounth"></label>
+                                                <input id="mounth" onchange="CheckMounth(this.value)" onchange="CheckDate(this.value)" asp-for="PublicationMounth" class="form-control" type="number" />
+                                                <span class="text-danger" asp-validation-for="PublicationMounth"></span>
+                                            </fieldset>
+                                        </div>
+                                        /
+                                        <div class="col-xl-2 col-lg-2 col-md-2 mb-1">
+                                            <fieldset class="form-group">
+                                                <label asp-for="PublicationYear"></label>
+                                                <input id="year" onchange="CheckYear(this.value)" asp-for="PublicationYear" class="form-control" type="number" />
+                                                <span class="text-danger" asp-validation-for="PublicationYear"></span>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <br />
+                                            <button type="submit" class="btn btn-cyan col-md-12"> افزودن کتاب </button>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+
+<script>
+    //جلوگیری کردن از وارد شدن تاریخ های نا معتبر
+        function CheckYear(value) {
+
+            if (value > 1400) {
+                document.getElementById("year").value=1400;
+            }
+            else if (value < 0) {
+                document.getElementById("year").value=0;
+            }
+
+        }
+        function CheckMounth(value) {
+
+            if (document.getElementById("date").value>29 && value>=12 )//ماه اسفند
+            {
+                document.getElementById("date").value=29;
+                document.getElementById("mounth").value=12;
+            }
+            else if (value <= 6 && document.getElementById("date").value>30) {//شیش ماه اول باید نهایت تا سی باشند و دوم تا سی و یک بجز اسفند
+                document.getElementById("date").value=30;
+            }
+            else if (value > 12) {
+                document.getElementById("mounth").value=12;
+            }
+            else if (value < 1) {
+                document.getElementById("mounth").value=1;
+            }
+
+        }
+        function CheckDate(value) {
+
+            if (value >29 && document.getElementById("mounth").value==12 )
+            {
+                document.getElementById("date").value=29;
+            }
+            else if (value > 30 && document.getElementById("mounth").value<=6) {
+
+                document.getElementById("date").value=30;
+            }
+            else if (value > 31) {
+                document.getElementById("date").value=31;
+            }
+            else if (value < 1) {
+                document.getElementById("date").value=1;
+            }
+
+        }
+</script>
+
+}

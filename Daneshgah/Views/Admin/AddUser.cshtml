@@ -1,0 +1,90 @@
+﻿@model AddEditUserViewModel
+@{
+    ViewBag.Title = "فرم ثبت نام کاربر جدید";
+}
+
+
+<section class="basic-elements">
+    <div class="row">
+        <div class="col-sm-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title-wrap bar-success">
+                        <h4 class="card-title mb-0">اطلاعات عضو جدید را وارد نمایید</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="px-3">
+                        <form asp-controller="Admin" asp-action="AddUser" method="post">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Name">نام</label>
+                                            <input asp-for="Name" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Name"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Family">نام خانوادگی</label>
+                                            <input asp-for="Family" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Family"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Email">ایمیل</label>
+                                            <input asp-for="Email" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Email"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="BirthDate">سال تولد</label>
+                                            <input id="birthdate" onchange="CheckDate(this.value)" asp-for="BirthDate" class="form-control" type="number" />
+                                            <span class="text-danger" asp-validation-for="BirthDate"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <label asp-for="Password">رمز عبور</label>
+                                            <input asp-for="Password" class="form-control" type="text" />
+                                            <span class="text-danger" asp-validation-for="Password"></span>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                                        <fieldset class="form-group">
+                                            <br />
+                                            <button type="submit" class="btn btn-cyan col-md-12"> افزودن کاربر  </button>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+
+    <script>
+        function CheckDate(value) {
+
+            if (value > 1400) {
+                document.getElementById("birthdate").value=1400;
+            }
+            else if (value < 1300) {
+                document.getElementById("birthdate").value=1300;
+            }
+
+        }
+    </script>
+
+}

@@ -1,0 +1,57 @@
+﻿@using Daneshgah.MethodHa.TabdilTarikh
+@model List<User>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <div class="text-center">
+        <h2 class="mt-5 mb-5 text-title-experts">کاربران </h2>
+        <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12 box-shadow pt-5 box-container mt-5 pb-3">
+            <a asp-controller="Admin" asp-action="AddUser" class="btn btn-darkaqua mb-3">افزودن کاربر جدید</a>
+
+            @if (ViewData["SuccessDelete"] != null)
+            {
+                <span class="alert alert-success float-left">@ViewData["SuccessDelete"]</span>
+            }
+            <form asp-controller="Admin" asp-action="FindUser" method="get" class="mr-4">
+                <div class="mb-3 text-justify">جست و جوی کاربران</div>
+                <fieldset class="form-group">
+                    <div class="row">
+                        <input type="text" class="form-control col-3 ml-2" name="searchkey" value="">
+                        <input class="btn btn-cyan col-3" type="submit" name="submit" value="جست وجو" />
+                    </div>
+                </fieldset>
+            </form>
+            <table class="table table-bordered table-responsive-sm table-hover">
+                <thead class="thead-custom">
+                    <tr class="text-center">
+                        <th height="20" class="xl636160" align="left" width="20" style="height: 15.0pt; width: 15pt">
+                            نام و نام خانوادگی
+                        </th>
+                        <th>ایمیل</th>
+                        <th>سال تولد</th>
+                        <th>تاریخ عضویت</th>
+                        <th> دستورات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Name   @user.Family</td>
+                            <td>@user.Email</td>
+                            <td>@user.BirthDate</td>
+                            <td>@user.RegisterDate.ToShamsi()</td>
+                            <td>
+                                <a asp-controller="Admin" asp-action="DeleteUser" asp-route-userId="@user.Id"  class="btn btn--danger">حذف</a>
+                                <a asp-controller="Admin" asp-action="EditUser" asp-route-userId="@user.Id" class="btn btn-info">تغییر </a>
+                                <a asp-controller="Admin" asp-action="GetAmanatHayeDirTahvildade" asp-route-userId="@user.Id" class="btn btn-info">امانت های به موقع تحویل نداده </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

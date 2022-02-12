@@ -1,0 +1,94 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en" dir="rtl" style="height: 100%;width: 100%;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Daneshgah</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/Font.css" />
+</head>
+<body style="height: 100%;width: 100%;font-family: 'Sans'">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
+            <div class="container">
+                <a asp-controller="Home" asp-action="Index">کتابخانه</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between nav-fill">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a asp-controller="Home" asp-action="Index">خانه</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="Logout">خروج از حساب</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="UserSignIn">ثبت نام کاربر</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="UserLogin"> ورود کاربر</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="AdminSignIn">ثبت نام ادمین</a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-controller="Home" asp-action="AdminLogin"> ورود ادمین</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="row" style="height: 100%;width: 100%;">
+        <aside id="sidebar" class="col-2">
+            <ul class="list-unstyled-rtl pr-4 ">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (User.FindFirstValue("IsAdmin") == "True")
+                    {
+                        <li>
+                            <a asp-controller="Admin" asp-action="Books">لیست کتاب ها</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Index">لیست اعضا</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Articles">لیست مقاله ها</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Journals">لیست مجله ها</a>
+                        </li>
+                    }
+                    <li>
+                        <a asp-controller="User" asp-action="Index">لیست کتابخانه</a>
+                    </li>
+                    <li>
+                        <a asp-controller="User" asp-action="Deposits">امانت های من</a>
+                    </li>
+
+                }
+            </ul>
+        </aside>
+        <div class="col-10 " style=" text-align: -webkit-center;">
+            <main role="main" class="pb-3 mt-4 container">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

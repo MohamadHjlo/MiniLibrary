@@ -1,0 +1,44 @@
+﻿@using Daneshgah.MethodHa.TabdilTarikh
+@model List<Deposit>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="text-center">
+    <div class="text-center">
+        <h1 class="mt-5 mb-5 text-title-experts">امانت های به موقع تحویل داده نشده </h1>
+        <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12 box-shadow pt-5 box-container mt-5 pb-3">
+            <table class="table table-bordered table-responsive-sm table-hover">
+                <thead class="thead-custom">
+                    <tr class="text-center">
+                        <th height="20" class="xl636160" align="left" width="20" style="height: 15.0pt; width: 15pt">
+                            شماره
+                        </th>
+                        <th>مهلت عودت</th>
+                        <th>عنوان</th>
+                        <th>موضوع</th>
+                        <th>شابک</th>
+                        <th>تعداد صفحات</th>
+                        <th>سال انتشار</th>
+                        <th>ناشر</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var amanat in Model)
+                    {
+                        <tr>
+                            <td>@amanat.Id</td>
+                            <td>@amanat.RespiteTime.ToShamsiCalender()</td>
+                            <td>@amanat.Book.Title</td>
+                            <td>@amanat.Book.Topic</td>
+                            <td>@amanat.Book.ISBN</td>
+                            <td>@amanat.Book.PageCount</td>
+                            <td>@amanat.Book.PublicationYear.ToShamsiCalender()</td>
+                            <td>@amanat.Book.Publisher</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
